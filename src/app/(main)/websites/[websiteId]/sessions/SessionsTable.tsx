@@ -1,9 +1,11 @@
-import { DataColumn, DataTable, type DataTableProps } from '@umami/react-zen';
+import { DataColumn, DataTable, type DataTableProps, Row, Text } from '@umami/react-zen';
 import { Avatar } from '@/components/common/Avatar';
 import { DateDistance } from '@/components/common/DateDistance';
+import { Favicon } from '@/components/common/Favicon';
 import Link from '@/components/common/Link';
 import { TypeIcon } from '@/components/common/TypeIcon';
 import { useFormat, useMessages } from '@/components/hooks';
+import { decodePunycodeDomain } from '@/lib/format';
 
 export function SessionsTable({
   websiteId,
@@ -58,6 +60,18 @@ export function SessionsTable({
             {formatValue(row.device, 'device')}
           </TypeIcon>
         )}
+      </DataColumn>
+      <DataColumn id="referrer" label={t(labels.referrer)} width="180px">
+        {(row: any) =>
+          row.referrer ? (
+            <Row gap="3" alignItems="center">
+              <Favicon domain={row.referrer} />
+              <Text title={row.referrer}>{decodePunycodeDomain(row.referrer)}</Text>
+            </Row>
+          ) : (
+            <Text>{`(${t(labels.none)})`}</Text>
+          )
+        }
       </DataColumn>
       <DataColumn id="lastAt" label={t(labels.lastSeen)} width="140px">
         {(row: any) => <DateDistance date={new Date(row.createdAt)} />}
