@@ -97,6 +97,7 @@ export const websiteSessionSchema = z
     country: z.string().nullable(),
     region: z.string().nullable(),
     city: z.string().nullable(),
+    referrer: z.string().nullable().optional(),
     distinctId: z.string().nullable().optional(),
     firstAt: z.iso.datetime(),
     lastAt: z.iso.datetime(),
